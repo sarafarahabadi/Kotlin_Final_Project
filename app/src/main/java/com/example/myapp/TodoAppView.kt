@@ -48,9 +48,11 @@ fun MainScaffoldView() {
 
 @Composable
 fun MainContentView(navController: NavHostController) {
+    val noteVM = viewModel<NoteViewModel>()
+
     NavHost(navController = navController, startDestination = HOME_ROUTE) {
         composable( route = HOME_ROUTE ){ HomeView() }
-        composable( route = NOTE_ROUTE ){ NoteView() }
+        composable( route = NOTE_ROUTE ){ NoteView(noteVM) }
     }
 }
 
@@ -64,10 +66,9 @@ fun HomeView() {
 }
 
 @Composable
-fun NoteView() {
+fun NoteView(noteVM: NoteViewModel) {
 
     var note by remember {mutableStateOf("")}
-    val noteVM = viewModel<NoteViewModel>(LocalContext.current as ComponentActivity)
 
     Column(modifier = Modifier
         .fillMaxSize()
@@ -86,10 +87,12 @@ fun NoteView() {
             Text(text = "Add Item")
         }
 
+        Spacer(modifier = Modifier.height(10.dp))
         noteVM.notes.value.forEach {
             Divider(thickness = 2.dp)
             Text(text = it.message)
         }
+        Divider(thickness = 2.dp)
     }
 }
 
