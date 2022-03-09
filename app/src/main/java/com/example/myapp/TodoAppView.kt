@@ -62,6 +62,7 @@ fun HomeView() {
         .fillMaxSize()
         .background(Color(0xFF64BCDF))
     ){
+
     }
 }
 
