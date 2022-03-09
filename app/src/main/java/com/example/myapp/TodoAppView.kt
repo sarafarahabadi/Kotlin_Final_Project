@@ -54,15 +54,31 @@ fun MainContentView(navController: NavHostController) {
 
 @Composable
 fun HomeView() {
-    Column(modifier = Modifier.fillMaxSize().background(Color(0xFFB6A266))){
-
+    Column(modifier = Modifier
+        .fillMaxSize()
+        .background(Color(0xFFB6A266))){
     }
 }
 
 @Composable
 fun NoteView() {
-    Column(modifier = Modifier.fillMaxSize().background(Color(0xFF796C44))){
 
+    var note by remember {mutableStateOf("")}
+
+    Column(modifier = Modifier
+        .fillMaxSize()
+        .background(Color(0xFF796C44))
+        .padding(10.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ){
+        OutlinedTextField(
+            value = note,
+            onValueChange = { note = it },
+            label = { Text(text = "Grocery List") })
+        Spacer(modifier = Modifier.height(10.dp))
+        OutlinedButton(onClick = {}) {
+            Text(text = "Add Item")
+        }
     }
 }
 
