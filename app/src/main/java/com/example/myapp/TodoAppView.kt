@@ -1,19 +1,25 @@
 package com.example.myapp
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.OutlinedButton
-import androidx.compose.material.OutlinedTextField
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 
+
+const val HOME_ROUTE = "home"
+const val NOTE_ROUTE = "note"
 
 @Composable
 fun MainView() {
@@ -28,11 +34,48 @@ fun MainView() {
 
 @Composable
 fun MainScaffoldView() {
+
+    val navController = rememberNavController()
+
     Scaffold(
         topBar = { TopBarView() },
-        bottomBar = {},
+        bottomBar = { BottomBarView(navController) },
         content = {}
     )
+}
+
+@Composable
+fun MainContentView(navController: NavHostController) {
+    NavHost(navController = navController, startDestination = HOME_ROUTE) {
+        composable( route = HOME_ROUTE ){}
+        composable( route = NOTE_ROUTE ){}
+    }
+}
+
+@Composable
+fun HomeView() {
+    
+}
+
+@Composable
+fun BottomBarView(navController: NavHostController) {
+    Row(modifier = Modifier
+        .fillMaxWidth()
+        .background(Color(0xFFF7CA43)),
+        horizontalArrangement = Arrangement.SpaceEvenly,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Icon(
+            painter = painterResource(id = R.drawable.ic_home),
+            contentDescription = "home",
+            modifier = Modifier.clickable { navController.navigate(HOME_ROUTE)}
+        )
+        Icon(
+            painter = painterResource(id = R.drawable.ic_grocery),
+            contentDescription = "note",
+            modifier = Modifier.clickable { navController.navigate(NOTE_ROUTE)}
+        )
+    }
 }
 
 @Composable

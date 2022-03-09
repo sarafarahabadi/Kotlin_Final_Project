@@ -6,7 +6,7 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 
 class UserViewModel: ViewModel() {
-    var username = mutableStateOf("")
+    var username = mutableStateOf("TEST")
 
     fun loginUser( email: String, pw: String) {
         Firebase.auth
