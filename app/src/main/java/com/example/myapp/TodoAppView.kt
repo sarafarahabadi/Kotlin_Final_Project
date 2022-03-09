@@ -1,5 +1,6 @@
 package com.example.myapp
 
+import androidx.activity.ComponentActivity
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -8,6 +9,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
@@ -56,7 +58,8 @@ fun MainContentView(navController: NavHostController) {
 fun HomeView() {
     Column(modifier = Modifier
         .fillMaxSize()
-        .background(Color(0xFFB6A266))){
+        .background(Color(0xFF64BCDF))
+    ){
     }
 }
 
@@ -64,10 +67,11 @@ fun HomeView() {
 fun NoteView() {
 
     var note by remember {mutableStateOf("")}
+    val noteVM = viewModel<NoteViewModel>(LocalContext.current as ComponentActivity)
 
     Column(modifier = Modifier
         .fillMaxSize()
-        .background(Color(0xFF796C44))
+        .background(Color(0xFF9BD5EB))
         .padding(10.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ){
@@ -76,8 +80,15 @@ fun NoteView() {
             onValueChange = { note = it },
             label = { Text(text = "Grocery List") })
         Spacer(modifier = Modifier.height(10.dp))
-        OutlinedButton(onClick = {}) {
+        OutlinedButton(
+            onClick = { noteVM.addNote( Note(note) ) }
+        ) {
             Text(text = "Add Item")
+        }
+
+        noteVM.notes.value.forEach {
+            Divider(thickness = 2.dp)
+            Text(text = it.message)
         }
     }
 }
@@ -86,7 +97,7 @@ fun NoteView() {
 fun BottomBarView(navController: NavHostController) {
     Row(modifier = Modifier
         .fillMaxWidth()
-        .background(Color(0xFFF7CA43)),
+        .background(Color(0xFF7CCEEE)),
         horizontalArrangement = Arrangement.SpaceEvenly,
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -109,7 +120,7 @@ fun TopBarView() {
     
     Row(modifier = Modifier
         .fillMaxWidth()
-        .background(Color(0xFFF7CA43))
+        .background(Color(0xFF7CCEEE))
         .padding(10.dp),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
