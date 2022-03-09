@@ -40,21 +40,30 @@ fun MainScaffoldView() {
     Scaffold(
         topBar = { TopBarView() },
         bottomBar = { BottomBarView(navController) },
-        content = {}
+        content = { MainContentView(navController) }
     )
 }
 
 @Composable
 fun MainContentView(navController: NavHostController) {
     NavHost(navController = navController, startDestination = HOME_ROUTE) {
-        composable( route = HOME_ROUTE ){}
-        composable( route = NOTE_ROUTE ){}
+        composable( route = HOME_ROUTE ){ HomeView() }
+        composable( route = NOTE_ROUTE ){ NoteView() }
     }
 }
 
 @Composable
 fun HomeView() {
-    
+    Column(modifier = Modifier.fillMaxSize().background(Color(0xFFB6A266))){
+
+    }
+}
+
+@Composable
+fun NoteView() {
+    Column(modifier = Modifier.fillMaxSize().background(Color(0xFF796C44))){
+
+    }
 }
 
 @Composable
