@@ -9,10 +9,23 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 
 
 @Composable
-fun LoginView() {
+fun MainView() {
+    val userVM = viewModel<UserViewModel>()
+
+    if(userVM.username.value.isEmpty()) {
+        LoginView(userVM)
+    } else {
+        Text(text = userVM.username.value)
+    }
+}
+
+
+@Composable
+fun LoginView(userVM: UserViewModel) {
     var email by remember { mutableStateOf("") }
     var pw by remember { mutableStateOf("") }
 
@@ -32,7 +45,7 @@ fun LoginView() {
             onValueChange = { pw = it },
             label = { Text(text = "Password") },
             visualTransformation = PasswordVisualTransformation())
-        OutlinedButton(onClick = { /*login to firebase */}) {
+        OutlinedButton(onClick = { userVM.loginUser(email, pw)}) {
             Text(text = "Login")
         }
     }
