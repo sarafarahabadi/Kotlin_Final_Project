@@ -6,13 +6,21 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 
 class UserViewModel: ViewModel() {
-    var username = mutableStateOf("TEST")
+    var username = mutableStateOf("")
 
-    fun loginUser( email: String, pw: String) {
+    fun createUser( emailRegister: String, pwRegister: String) {
         Firebase.auth
-            .signInWithEmailAndPassword(email, pw)
+            .createUserWithEmailAndPassword(emailRegister, pwRegister)
             .addOnSuccessListener {
-                username.value = email
+                username.value = emailRegister
+            }
+    }
+
+    fun loginUser( emailLogin: String, pwLogin: String) {
+        Firebase.auth
+            .signInWithEmailAndPassword(emailLogin, pwLogin)
+            .addOnSuccessListener {
+                username.value = emailLogin
             }
     }
 

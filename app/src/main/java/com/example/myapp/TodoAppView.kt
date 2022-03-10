@@ -1,6 +1,5 @@
 package com.example.myapp
 
-import androidx.activity.ComponentActivity
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -9,7 +8,6 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
@@ -139,26 +137,41 @@ fun TopBarView() {
 
 @Composable
 fun LoginView(userVM: UserViewModel) {
-    var email by remember { mutableStateOf("") }
-    var pw by remember { mutableStateOf("") }
+    var emailRegister by remember { mutableStateOf("") }
+    var pwRegister by remember { mutableStateOf("") }
+
+    var emailLogin by remember { mutableStateOf("") }
+    var pwLogin by remember { mutableStateOf("") }
 
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .height(200.dp),
+            .height(500.dp),
         verticalArrangement = Arrangement.SpaceEvenly,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         OutlinedTextField(
-            value = email,
-            onValueChange = { email = it },
+            value = emailRegister,
+            onValueChange = { emailRegister = it },
             label = { Text(text = "Email") })
         OutlinedTextField(
-            value = pw,
-            onValueChange = { pw = it },
+            value = pwRegister,
+            onValueChange = { pwRegister = it },
             label = { Text(text = "Password") },
             visualTransformation = PasswordVisualTransformation())
-        OutlinedButton(onClick = { userVM.loginUser(email, pw)}) {
+        OutlinedButton(onClick = { userVM.createUser(emailRegister, pwRegister)}) {
+            Text(text = "Register")
+        }
+        OutlinedTextField(
+            value = emailLogin,
+            onValueChange = { emailLogin = it },
+            label = { Text(text = "Email") })
+        OutlinedTextField(
+            value = pwLogin,
+            onValueChange = { pwLogin = it },
+            label = { Text(text = "Password") },
+            visualTransformation = PasswordVisualTransformation())
+        OutlinedButton(onClick = { userVM.loginUser(emailLogin, pwLogin)}) {
             Text(text = "Login")
         }
     }
