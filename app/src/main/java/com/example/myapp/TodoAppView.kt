@@ -49,19 +49,27 @@ fun MainContentView(navController: NavHostController) {
     val noteVM = viewModel<NoteViewModel>()
 
     NavHost(navController = navController, startDestination = HOME_ROUTE) {
-        composable( route = HOME_ROUTE ){ HomeView() }
+        composable( route = HOME_ROUTE ){ HomeView(noteVM) }
         composable( route = NOTE_ROUTE ){ NoteView(noteVM) }
     }
 }
 
 @Composable
-fun HomeView() {
+fun HomeView(noteVM: NoteViewModel) {
+    var note by remember {mutableStateOf("")}
+
     Column(modifier = Modifier
         .fillMaxSize()
         .background(Color(0xFF64BCDF))
     ){
-
+        noteVM.notes.value.forEach {
+            Divider(thickness = 2.dp)
+            Text(text = it.message)
+        }
+        Spacer(modifier = Modifier.height(10.dp))
+        //Get data from firestore and display here for each user!
     }
+
 }
 
 @Composable

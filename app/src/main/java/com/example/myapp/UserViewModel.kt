@@ -1,5 +1,6 @@
 package com.example.myapp
 
+import android.util.Log
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import com.google.firebase.auth.ktx.auth
@@ -14,6 +15,9 @@ class UserViewModel: ViewModel() {
             .addOnSuccessListener {
                 username.value = emailRegister
             }
+            .addOnFailureListener{ e ->
+                Log.d("error:", e.message.toString())
+            }
     }
 
     fun loginUser( emailLogin: String, pwLogin: String) {
@@ -21,6 +25,9 @@ class UserViewModel: ViewModel() {
             .signInWithEmailAndPassword(emailLogin, pwLogin)
             .addOnSuccessListener {
                 username.value = emailLogin
+            }
+            .addOnFailureListener{ e ->
+                Log.d("error:", e.message.toString())
             }
     }
 
